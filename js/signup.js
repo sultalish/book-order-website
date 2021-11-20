@@ -35,9 +35,9 @@ function signup()
             {    
                 var jsonObject = JSON.parse(request.responseText);
                 var endpointmsg = jsonObject['msg'];
-                 console.log(endpointmsg);
+                // console.log(endpointmsg);
                 var errormsg = endpointmsg.split('professor.').pop();
-                console.log(errormsg);
+               // console.log(errormsg);
                 if (errormsg === "done")
                     {
                         document.getElementById("upstatus").innerHTML = "Signed UP successfully!";

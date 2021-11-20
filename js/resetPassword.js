@@ -1,25 +1,18 @@
-let resetPassUpUrl = '../src/resetPassword.php';
+let resetPassUpUrl = './src/resetPassword.php';
 
 
 function resetPassword()
 {
     "use strict";
     
-    var email = document.getElementById("emailcodeResPass").value;
-    var resPassCode = document.getElementById("resPassCode").value;
-    var resPassword = document.getElementById("resNewPass").value;
-    var confirmResPassword = document.getElementById("ConfirmResNewPass").value;
-    
-    document.getElementById("emailcodeResPass").innerHTML = "";
-    document.getElementById("resPassCode").innerHTML = "";
-    document.getElementById("resNewPass").innerHTML = "";
-    document.getElementById("ConfirmResNewPass").innerHTML = "";
-    document.getElementById("resPassStatus").innerHTML = "";
+    var email = document.getElementById("username").value;
 
- if (validateInputPassRes(email, resPassCode, resPassword, confirmResPassword))
+ if (checkResEmail(email))
+
     {
-        var hashedResPassword = md5(resPassword);
-        var json = '{"email" : "' + email + '", "resetPassCode" : "' + resPassCode + '", "password" : "' + hashedResPassword + '"}';
+        var passCode = Math.floor(100000 + Math.random() * 900000);
+        var hashedResPassword = md5(passCode);
+        var json = '{"email" : "' + email + '", "PassCode" : "' + passCode + '", "password" : "' + hashedResPassword + '"}';
        
         var request = new XMLHttpRequest();
         request.open("POST", resetPassUpUrl, true);
@@ -34,32 +27,14 @@ function resetPassword()
                 console.log(errormsg);
                 if (errormsg === "passwordupdated")
                     {
-                        document.getElementById("resPassStatus").innerHTML = "Password updated successfully!";
-                        document.getElementById("resPassStatus").style.color = "green";                       
-
-                        document.getElementById("emailcodeResPass").value = "";
-                        document.getElementById("resPassCode").value = "";
-                        document.getElementById("resNewPass").value = "";
-                        document.getElementById("ConfirmResNewPass").value = "";
-
+                        document.getElementById("logstatus").innerHTML = "Check you email for temporary password!";
+                        document.getElementById("logstatus").style.color = "green";                       
                 }
-
-                if (errormsg === "Profileneedsactivation")
-                    {
-                       document.getElementById("resPassStatus").innerHTML = "Email not verified!";
-                       document.getElementById("resPassStatus").style.color = "red"; 
-                  }
-
-              if (errormsg === "Codedoesnotmuchourrecords")
-                    {
-                       document.getElementById("resPassStatus").innerHTML = "Code does not much our records";
-                       document.getElementById("resPassStatus").style.color = "red"; 
-                  }
 
                 if (errormsg === "Emailnotfound")
                   {
-                       document.getElementById("resPassStatus").innerHTML = "Email not found";
-                       document.getElementById("resPassStatus").style.color = "red"; 
+                       document.getElementById("logstatus").innerHTML = "Email not found";
+                       document.getElementById("logstatus").style.color = "red"; 
                   }
             }
         };
@@ -68,43 +43,13 @@ function resetPassword()
         }
         catch(error)
         {
-            document.getElementById("resPassStatus").innerHTML = error.message;
-            document.getElementById("resPassStatus").style.color = "red";
+            document.getElementById("logstatus").innerHTML = error.message;
+            document.getElementById("logstatus").style.color = "red";
         }
     }
 }
 
-function checkResConfirmPassword(confirmPassword, password)
-{
-    if (confirmPassword !== password)
-    {
-        document.getElementById("resPassStatus").innerHTML = "The two passwords are not matched!";
-        document.getElementById("resPassStatus").style.color = "red";
-        return false;
-    }
-    return true;
-}
 
-//exports = checkConfirmPassword();
-
-
-function checkResPassword(password)
-{
-    "use strict";
-    if (password.length === 0) {
-        document.getElementById("resPassStatus").innerHTML = "Password is required!";
-        document.getElementById("resPassStatus").style.color = "red";
-        return false;
-    }
-    if (password.length < 5)
-    {
-        document.getElementById("resPassStatus").innerHTML = "Your password must be at least 5 characters long, should not exceed 45 characters!";
-        document.getElementById("resPassStatus").style.color = "red";
-        return false;
-    }
-
-    return true;
-}
 
 
 
@@ -115,64 +60,21 @@ function checkResEmail(email)
 
     if (email.length === 0)
     {
-        document.getElementById("resPassStatus").innerHTML = "Email is required!";
-        document.getElementById("resPassStatus").style.color = "red";
+        document.getElementById("logstatus").innerHTML = "Email is required!";
+        document.getElementById("logstatus").style.color = "red";
         return false;
     }
     if (email.length > 45)
     {
-        document.getElementById("resPassStatus").innerHTML = "Email is too long!<br>Email should not exceed 45 characters!";
-        document.getElementById("resPassStatus").style.color = "red";
+        document.getElementById("logstatus").innerHTML = "Email is too long!<br>Email should not exceed 45 characters!";
+        document.getElementById("logstatus").style.color = "red";
         return false;
     }
     if (!emailREGEX.test(email))
     {
-        document.getElementById("resPassStatus").innerHTML = "Please enter your email address in format:<br>mail@example.com";
-        document.getElementById("resPassStatus").style.color = "red";
+        document.getElementById("logstatus").innerHTML = "Please enter your email address in format:<br>mail@example.com";
+        document.getElementById("logstatus").style.color = "red";
         return false;
     }
-    return true;
-}
-
-
-function checkResCode(confirmCode)
-{
-    "use strict";
-    if (confirmCode.length === 0)
-    {
-        document.getElementById("resPassStatus").innerHTML = "Code is required!";
-        document.getElementById("resPassStatus").style.color = "red";
-        return false;
-    }
-
-    if (confirmCode.length !== 8)
-    {
-        document.getElementById("resPassStatus").innerHTML = "Please enter a valid code!";
-        document.getElementById("resPassStatus").style.color = "red";
-        return false;
-    }
-    var i = 0;
-    for (i = 0; i < 8; i += 1)
-    {
-        if (confirmCode.charAt(i) < '0' || confirmCode.charAt(i) > '9')
-        {
-            document.getElementById("resPassStatus").innerHTML = "Please enter valid code!";
-            document.getElementById("resPassStatus").style.color = "red";
-            return false;
-        }
-    }
-    return true;
-}
-
-
-
-function validateInputPassRes(email, resPassCode, resPassword, confirmResPassword )
-{
-    "use strict";
-    if(!checkResEmail(email)) return false;
-    if (!checkResCode(resPassCode)) return false;
-    if (!checkResPassword(resPassword)) return false;
-    if (!checkResConfirmPassword(resPassword, confirmResPassword)) return false;
-       
     return true;
 }

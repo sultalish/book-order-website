@@ -1,52 +1,39 @@
 <?php
 
     require_once('dbconnect.php');
+    require_once('sendmail.php');
     $inputFromJson = json_decode(file_get_contents('php://input'), true);
   
       $email = $inputFromJson['email'];
-      $confirmCode =  $inputFromJson['resetPassCode'];
+      $confirmCode =  $inputFromJson['PassCode'];
       $password =  $inputFromJson['password'];
       $sql;
-      $newconfirmCode = rand(100, 1000);
       //echo $email;
       
       //Start Reading Sequence
-     if ($conn->connect_error)
+     if ($con->connect_error)
       {
-              error( $conn->connect_error);
+              error( $con->connect_error);
       }
       else
       {
-        $sql = "SELECT customer_confcode, customer_prof_status FROM customer WHERE customer_email = '". $email ."';";
-        $result = mysqli_query($conn, $sql);
+        $sql = "SELECT * FROM professor WHERE email = '". $email ."';";
+        $result = mysqli_query($con, $sql);
         $numRows = mysqli_num_rows($result);
           //echo $numRows;
 
             //Review SQL Result
           if($numRows > 0)
           {
-                //User found
-                $user = $result->fetch_assoc();
-                $code = $user["customer_confcode"];
-                $profile_status = $user["customer_prof_status"];
-               // echo $code;
-                  if($profile_status == 0){
-                       error("Profileneedsactivation");
-                  
-                   } else if ($profile_status == 1 && $code == $confirmCode)
-                  {
-                           $query = "UPDATE customer SET customer_password = '" .$password . "' , customer_confcode='" . $newconfirmCode . "' WHERE customer_email = '". $email ."';";
+                           $query = "UPDATE professor SET passCode = '" .$password . "';";
 
-                              if($conn->query($query) != TRUE ){
-                                  error($conn->error);
+                              if($con->query($query) != TRUE ){
+                                  error($con->error);
                                 }
                               else{
-                                error("passwordupdated");     
+                              sendEmail($email, $confirmCode);
+                                  error("passwordupdated");     
                                   }                   
-                                    
-                    }else{
-                          error("Codedoesnotmuchourrecords");
-                          }
            } //User not found
           else
             {

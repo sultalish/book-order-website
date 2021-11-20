@@ -2,8 +2,8 @@
 let loginUrl = './src/login.php';
 
 
-var customer_id = 0;
-var prof_status = 0;
+var professor_id = 0;
+
 var loginName = "";
 var password="";
 var loginPassword = "";
@@ -34,23 +34,16 @@ function login()
 				console.log(request);
 
 				var jsonObject = JSON.parse(request.responseText);
-                customer_id = jsonObject.customer_id;
-                prof_status = jsonObject.customer_prof_status;
+                professor_id = jsonObject.professorID;
                 var endpointmsg = jsonObject.error;
-                if( customer_id < 1 )
+                if( professor_id < 1 )
 		          {
 			          document.getElementById("logstatus").innerHTML = endpointmsg;
                       document.getElementById("logstatus").style.color = "red";
 			         return;
 		          }
-		          console.log(prof_status);
-		         if( prof_status === "0"){
-			          document.getElementById("logstatus").innerHTML = "Email not verified!!";
-                      document.getElementById("logstatus").style.color = "red";
-			         return;
-		          }
 
-                u_fullName = jsonObject.customer_fullname;
+                u_fullName = jsonObject.fullName;
                 //console.log(customer_id);
                 saveCookie();
                 window.location.href = "dashboard.html";
@@ -73,8 +66,8 @@ function login()
 
 function logout()
 {
-	customer_id = 0;
-	document.cookie = "customer_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+	professor_id = 0;
+	document.cookie = "professor_id= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 	window.location.href = "./index.html";
 }
 
@@ -83,12 +76,12 @@ function saveCookie()
 	var minutes = 20;
 	var date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));
-	document.cookie = "customer_id=" + customer_id + ";expires=" + date.toGMTString();
+	document.cookie = "professor_id=" + professor_id + ";expires=" + date.toGMTString();
 }
 
 function readCookie()
 {
-	customer_id = -1;
+	professor_id = -1;
 	var data = document.cookie;
 	var splits = data.split(";");
 	for(var i = 0; i < splits.length; i++)
@@ -96,9 +89,9 @@ function readCookie()
 		var thisOne = splits[i].trim();
 		var tokens = thisOne.split("=");
 
-		if( tokens[0] == "customer_id" )
+		if( tokens[0] == "professor_id" )
 		{
-			customer_id = parseInt( tokens[1].trim() );
+			professor_id = parseInt( tokens[1].trim() );
 		}
 	}
 
