@@ -7,6 +7,7 @@
         <title>Professor Dashboard</title>
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/dashStyle.css" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="shortcut icon" href="img/logo.png">
@@ -14,43 +15,9 @@
         <script src="js/passwordReset.js"></script>
         <script src="js/readCookie.js"></script>
         <script src="js/md5.js"></script>
+        <script src="js/newRequest.js"></script>
      
-        <style>            
-            h3 {
-              text-align: center;
-            }
 
-            .button {
-                    transition-duration: 0.4s;
-                    background-color: #81cbd4;
-                    margin: auto;
-                    display: block;
-                    margin-bottom: 20px;
-                    align-content: center;
-                }
-
-                .button:hover {
-                background-color: #09666e; /* Green */
-                color: white;
-                }
-                .center {
-                margin: auto;
-                display: block;
-                width: 35%;
-                background-color: rgb(225, 238, 238);
-                border: 3px solid #f6f8f4;
-                padding: 10px 20px 10px 40px;
-                justify-content: center;
-           
-                }
-
-                .input{
-                    margin: auto;
-                    display: block;
-                    margin-bottom: 20px;
-                    align-content: center;
-                }
-            </style>
     </head>
     <body class="font-weight-light text-secondary">
 
@@ -92,24 +59,36 @@
               <option value="summer">Summer</option>
             </select><span></span>
             <label >Year:</label>
-            <input type="number" min="2018" max="2030" step="1" value="2021" />
+            <input type="number" id="year" min="2018" max="2030" step="1" value="2021" />
         </div>
 
             <div class="center">
-                    <input type="text" class="input" id="bboktitle" placeholder="Book title"> 
-
-                     <input type="text" class="input" id="authornames" placeholder="Author names">
-
-                    <input type="text" class="input" id="edition" placeholder="Edition">
-
-                    <input type="text" class="input" id="publisher" placeholder="Publisher">
-
-                    <input type="text" class="input" id="isbn" placeholder="ISBN"> 
-
-                    <input type="text" class="input" id="classid" placeholder="Class ID">
-                                         
-                    <button type="button" class="btn btn-default" onclick="" style="display: block">Add book</button> 
-                    <p id="resPassStatus" style="font-size: 0.6em"></p>                       
+                <div class="input-w">
+                    <label for="your-input" width="20">Book title</label>
+                    <input type="text"  id="booktitle" placeholder="Enter book title"> 
+                </div>
+                <div class="input-w">
+                     <label for="your-input">Author names</label>
+                     <input type="text"  id="authornames" placeholder="Enter author names">
+                </div>
+                <div class="input-w">
+                    <label for="your-input">Edition</label>
+                    <input type="text"  id="edition" placeholder="Enter Edition">
+                </div>
+                <div class="input-w">
+                    <label for="your-input">Publisher</label>
+                    <input type="text"  id="publisher" placeholder="Enter publisher">
+                </div>
+                <div class="input-w">
+                    <label for="your-input">ISBN</label>
+                    <input type="text"  id="isbn" placeholder="Enter ISBN"> 
+                </div>
+                <div class="input-w">
+                    <label for="your-input">Class ID</label>
+                    <input type="text"  id="classid" placeholder="Enter class ID">
+                </div>                       
+                    <button type="button" class="btn btn-default" onclick="newRequest();" style="display: block">Add book</button> 
+                    <p id="requestStatus" style="font-size: 0.6em"></p>                       
             </div>                     
 
 
@@ -133,7 +112,7 @@
                             </form>                         
                         </div>                     
                         <div class="modal-footer">                          
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModalresPass" onclick="resetPassword()">Change password</button>                        
+                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModalresPass" onclick="">Change password</button>                        
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                         
                         </div>                     
                     </div>                 
@@ -142,17 +121,19 @@
         </div> 
 
  
-<p id="error" style="font-size: 0.5em"></p>          
+ 
+<div class="container"> 
+    <div class="col-md pb-2 pt-2"> 
+        <p id="error" style="font-size: 0.5em"></p> 
+       <br> <br> <br>
+    </div>
+</div>         
 
         <footer class="bg-dark pt-0 fixed-bottom text-white"> 
             <div class="container"> 
-                <div class="pb-3 pt-3 small"> 
-                    <div class="align-items-center row"> 
                         <div class="col-md pb-2 pt-2"> 
                             <p class="mb-0">&copy; All Rights Reserved - <a href="https://github.com/sultalish/book-order-website">Bookstore</a> by <a href="https://github.com/sultalish/book-order-website">COP4710 Team 31</a></p> 
-                        </div>                     
-                    </div>                 
-                </div>             
+                        </div>                                 
             </div>         
         </footer>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>     

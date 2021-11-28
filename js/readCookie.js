@@ -13,6 +13,8 @@ function readCookie(){
             if( tokens[0] == "professor_id" )
             {
               var  professorID = parseInt( tokens[1].trim() );
+            }else{
+              var  professorID = 0;
             }
         }
         return professorID;
