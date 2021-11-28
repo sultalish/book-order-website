@@ -116,3 +116,7 @@ background: linear-gradient(to right, #FFAFBD, #C9FFBF);
 	top: 0px; 
 	right: 0px; 
 } 
+
+h3 {
+	text-align: center;
+}

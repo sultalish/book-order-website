@@ -4,45 +4,142 @@
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Dashboard</title>
+        <title>Professor Dashboard</title>
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="shortcut icon" href="img/logo.png">
-        <link rel="stylesheet" href="css/stars.css">
-        <link rel="stylesheet" href="css/style3.css"> 
         <script src="js/jquery.min.js"></script>
+        <script src="js/passwordReset.js"></script>
+        <script src="js/readCookie.js"></script>
+        <script src="js/md5.js"></script>
      
+        <style>            
+            h3 {
+              text-align: center;
+            }
 
+            .button {
+                    transition-duration: 0.4s;
+                    background-color: #81cbd4;
+                    margin: auto;
+                    display: block;
+                    margin-bottom: 20px;
+                    align-content: center;
+                }
+
+                .button:hover {
+                background-color: #09666e; /* Green */
+                color: white;
+                }
+                .center {
+                margin: auto;
+                display: block;
+                width: 35%;
+                background-color: rgb(225, 238, 238);
+                border: 3px solid #f6f8f4;
+                padding: 10px 20px 10px 40px;
+                justify-content: center;
+           
+                }
+
+                .input{
+                    margin: auto;
+                    display: block;
+                    margin-bottom: 20px;
+                    align-content: center;
+                }
+            </style>
     </head>
     <body class="font-weight-light text-secondary">
+
+
+        
+               
         <nav class="bg-white navbar navbar-expand-lg border navbar-light py-lg-0" > 
             <div class="container"> 
                 <a href=""><img src="img/logo.png" class="font-weight-bold navbar-brand text-dark" width="50" heigth="50"></a>
                 <h4>Welcome</h4>
                 <h4 id="displayusername"></h4>
                 <h4></h4>
-               
-                <ul class="flex-row navbar-nav">                   
+                <div class="container"> 
+                    <span></span>
+                <ul class="flex-row navbar-nav"> 
+                   <li class="nav-item"> 
+                    <a href="#" onclick="" class="nav-link px-lg-3 py-lg-3" style="font-size: 0.8em"> Edit Requests  </a>
+                    </li> 
                     
-                    <li class="nav-item" id="logButton"> 
-                         <a href="#" onclick="logout();" class="nav-link px-lg-3 py-lg-3" >Logout</a>
+                    <li class="nav-item"> 
+                        <a href="#myModalres" onclick="" class="nav-link px-lg-3 py-lg-3" style="font-size: 0.8em"
+                        data-toggle="modal" data-target="#myModalres" > Change Password  </a>
+                   </li> 
+                    
+                    <li class="nav-item"> 
+                         <a href="#" onclick="logout();" class="nav-link px-lg-3 py-lg-3" style="font-size: 0.8em"> Logout</a>
                     </li>                      
                 </ul>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-3" aria-controls="navbarNavDropdown-3" aria-expanded="false" aria-label="Toggle navigation"> 
-                    <span class="navbar-toggler-icon"></span> 
-                </button>
-                <div class="collapse navbar-collapse " id="navbarNavDropdown-3"> 
-                    <ul class="ml-auto navbar-nav"> 
-                        <li class="nav-item active"> 
-                        </li>                                                
-                    </ul>                     
-                </div>
+                </div>               
             </div>
         </nav>
-       
+        <h3 >Add New Request Form</h3>
 
+        <div class="center">
+            <label >Semester:</label>
+            <select id="semester" name="semester">
+              <option value="fall">Fall</option>
+              <option value="spring">Spring</option>
+              <option value="summer">Summer</option>
+            </select><span></span>
+            <label >Year:</label>
+            <input type="number" min="2018" max="2030" step="1" value="2021" />
+        </div>
+
+            <div class="center">
+                    <input type="text" class="input" id="bboktitle" placeholder="Book title"> 
+
+                     <input type="text" class="input" id="authornames" placeholder="Author names">
+
+                    <input type="text" class="input" id="edition" placeholder="Edition">
+
+                    <input type="text" class="input" id="publisher" placeholder="Publisher">
+
+                    <input type="text" class="input" id="isbn" placeholder="ISBN"> 
+
+                    <input type="text" class="input" id="classid" placeholder="Class ID">
+                                         
+                    <button type="button" class="btn btn-default" onclick="" style="display: block">Add book</button> 
+                    <p id="resPassStatus" style="font-size: 0.6em"></p>                       
+            </div>                     
+
+
+        <div class="container"> 
+            <!-- Change PasswordModal -->         
+            <div class="modal fade" id="myModalres" role="dialog"> 
+                <div class="modal-dialog"> 
+                    <!-- Send reset password code Modal -->                 
+                    <div class="modal-content"> 
+                        <div class="modal-header"> 
+                            <h4 class="modal-title">Change Password</h4> 
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>                         
+                        </div>                     
+                        <div class="modal-body"> 
+                            <form class="form-group"> 
+                                <label for="emailab">Enter Password</label>                             
+                                <input type="password" class="form-control" id="passRes" placeholder="New Password">
+                                <br>
+                                <input type="password" class="form-control" id="confirmpassRes" placeholder="Confirm New Password">  
+                                <p id="resPassStatus" style="font-size: 0.6em"></p> 
+                            </form>                         
+                        </div>                     
+                        <div class="modal-footer">                          
+                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModalresPass" onclick="resetPassword()">Change password</button>                        
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                         
+                        </div>                     
+                    </div>                 
+                </div>             
+            </div>         
+        </div> 
 
  
 <p id="error" style="font-size: 0.5em"></p>          
