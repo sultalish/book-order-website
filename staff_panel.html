@@ -24,6 +24,14 @@
             <i class="fa fa-database"></i>
             <span class="db-access">Access DB</span>
         </a>
+        <a href="#send-email" class="delete-admin-tooltip">
+            <i class="fa fa-envelope-square"></i>
+            <span class="delete-admin">Send email</span>
+        </a>
+        <a href="#send-invitation" class="delete-admin-tooltip">
+            <i class="fa fa-handshake-o"></i>
+            <span class="delete-admin">Send Invitation</span>
+        </a>
         <a href="#" class="delete-admin-tooltip">
             <i class="fa fa-trash"></i>
             <span class="delete-admin">Delete Admin</span>
@@ -50,6 +58,46 @@
                     <button type="button" class="cancelbtn">Reset</button>
                     <button type="submit" class="signupbtn">Create an Account and Send an Email</button>
                 </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="send-email">
+        <form action="/action_page.php">
+            <div class="container">
+                <h1>Send email to Professor to submit books</h1>
+                <hr>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+
+                <label for="email-content"><b>Content</b></label>
+                <input type="text" placeholder="Enter Email Content" name="email-content" rows="4" cols="50" required>
+
+                <label for="reminder"><b>Reminder Date</b></label>
+                <br /><br />
+                <input type="date" id="reminder" name="reminder" required>
+
+                <button type="submit" class="submit-email-prof">Send email</button>
+
+            </div>
+        </form>
+    </div>
+
+    <div id="send-invitation">
+        <form action="/action_page.php">
+            <div class="container">
+                <h1>Send an invitation email to a professor to request book information</h1>
+                <hr>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+
+                <label for="email-content"><b>Content</b></label>
+                <input type="text" placeholder="Enter Email Content" name="email-content" rows="4" cols="50" required>
+
+                <button type="submit" class="submit-email-prof">Send email</button>
+
             </div>
         </form>
     </div>

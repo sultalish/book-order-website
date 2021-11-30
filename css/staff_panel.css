@@ -192,3 +192,9 @@ button:hover {
     width: 100%;
   }
 }
+
+textarea {
+  resize: none;
+  width: 100px;
+  height: 100px;
+}
