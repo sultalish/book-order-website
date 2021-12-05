@@ -13,11 +13,6 @@ function signup()
     var confirmPassword = document.getElementById("confirmpass").value;
     var phoneNumber = document.getElementById("userphone").value;
     
-    document.getElementById("fullname").innerHTML = "";
-    document.getElementById("userpass").innerHTML = "";
-    document.getElementById("confirmpass").innerHTML = "";
-    document.getElementById("userphone").innerHTML = "";
-    document.getElementById("useremail").innerHTML = "";
     document.getElementById("upstatus").innerHTML = "";
 
  if (validateInput(fullname, email, phoneNumber, password, confirmPassword))

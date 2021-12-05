@@ -12,8 +12,8 @@ function resetPassword()
     var password = document.getElementById("passRes").value;
     var confirmPassword = document.getElementById("confirmpassRes").value;
 
-    document.getElementById("passRes").innerHTML = "";
-    document.getElementById("confirmpassRes").innerHTML = "";
+    document.getElementById("passRes").value = "";
+    document.getElementById("confirmpassRes").value = "";
     
     document.getElementById("resPassStatus").innerHTML = "";
 
@@ -38,11 +38,11 @@ function resetPassword()
                 if (errormsg === "done")
                     {
                         
-                        document.getElementById("passRes").innerHTML = "";
-                        document.getElementById("confirmpassRes").innerHTML = "";
-
                         document.getElementById("resPassStatus").innerHTML = "Password changed successfully!";
-                        document.getElementById("resPassStatus").style.color = "green";                     
+                        document.getElementById("resPassStatus").style.color = "green"; 
+                        
+                        document.getElementById("passRes").value = "";
+                        document.getElementById("confirmpassRes").value = "";
 
                      }
             }

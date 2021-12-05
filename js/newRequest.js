@@ -17,13 +17,13 @@ function newRequest()
     var isbn = document.getElementById("isbn").value;
     var classid = document.getElementById("classid").value;
     
-    document.getElementById("booktitle").innerHTML = "";
-    document.getElementById("authornames").innerHTML = "";
-    document.getElementById("edition").innerHTML = "";
-    document.getElementById("publisher").innerHTML = "";
-    document.getElementById("isbn").innerHTML = "";
-    document.getElementById("classid").innerHTML = "";
-    document.getElementById("requestStatus").innerHTML = "";
+    document.getElementById("booktitle").value = "";
+    document.getElementById("authornames").value = "";
+    document.getElementById("edition").value = "";
+    document.getElementById("publisher").value = "";
+    document.getElementById("isbn").value = "";
+    document.getElementById("classid").value = "";
+    document.getElementById("requestStatus").innerHTML= "";
 
  if (validateInput(isbn, classid, userID))
     {
@@ -44,21 +44,21 @@ function newRequest()
                // console.log(errormsg);
                 if (errormsg === "done")
                     {
-                        document.getElementById("requestStatus").innerHTML = "Book added successfully!";
+                        document.getElementById("requestStatus").value = "Book added successfully!";
                         document.getElementById("requestStatus").style.color = "green";                       
 
-                        document.getElementById("booktitle").innerHTML = "";
-                        document.getElementById("authornames").innerHTML = "";
-                        document.getElementById("edition").innerHTML = "";
-                        document.getElementById("publisher").innerHTML = "";
-                        document.getElementById("isbn").innerHTML = "";
-                        document.getElementById("classid").innerHTML = "";
+                        document.getElementById("booktitle").value = "";
+                        document.getElementById("authornames").value = "";
+                        document.getElementById("edition").value = "";
+                        document.getElementById("publisher").value = "";
+                        document.getElementById("isbn").value = "";
+                        document.getElementById("classid").value = "";
 
                 }
 
                 if (errormsg !== "done")
                     {
-                       document.getElementById("requestStatus").innerHTML = "Book Already exist in this request";
+                       document.getElementById("requestStatus").value = "Book Already exist in this request";
                        document.getElementById("requestStatus").style.color = "red"; 
                 }
             }
@@ -68,7 +68,7 @@ function newRequest()
         }
         catch(error)
         {
-            document.getElementById("requestStatus").innerHTML = error.message;
+            document.getElementById("requestStatus").value = error.message;
             document.getElementById("requestStatus").style.color = "red";
         }
     }
@@ -78,7 +78,7 @@ function checkclassID(classID)
 {
     if (classID.length <= 3)
     {
-        document.getElementById("requestStatus").innerHTML = "Class ID is required";
+        document.getElementById("requestStatus").value = "Class ID is required";
         document.getElementById("requestStatus").style.color = "red";
         return false;
     }
@@ -91,7 +91,7 @@ function checkisbn(isbn)
     
     if (isbn.length <= 3)
     {
-        document.getElementById("requestStatus").innerHTML = "ISBN is required";
+        document.getElementById("requestStatus").value = "ISBN is required";
         document.getElementById("requestStatus").style.color = "red";
         return false;
     }
@@ -104,7 +104,7 @@ function checkuserID(userID)
     
     if (userID <= 0 || userID === undefined)
     {
-        document.getElementById("requestStatus").innerHTML = "Login is required";
+        document.getElementById("requestStatus").value = "Login is required";
         document.getElementById("requestStatus").style.color = "red";
 
         window.setTimeout(function(){
