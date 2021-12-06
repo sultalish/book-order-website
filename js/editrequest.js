@@ -25,8 +25,8 @@ function listbooks() {
             professor_id = parseInt( tokens[1].trim() );
         }
     }
-     //professor_id = "123";
-    console.log(requestSemester);
+    // professor_id = "123";
+    console.log(professor_id);
 //     var searchItem = 0;
 //    console.log(searchItem);
     var jsonPayload = '{"professorid" : "' + professor_id + '", "semester" : "' + requestSemester + '", "year" : "' + requestYear + '"}';
@@ -230,7 +230,67 @@ function listbooks() {
 // }
 
 
-function deleteRequest(){
+function deleteRequest() {
+    'use strict';
+    var requestYear = document.getElementById("year").value;
+    var requestSemester = document.getElementById("semester").value;
+     document.getElementById("error").innerHTML = "";
 
+    var data = document.cookie;
+    var splits = data.split(";");
+    for(var i = 0; i < splits.length; i++)
+    {
+        var thisOne = splits[i].trim();
+        var tokens = thisOne.split("=");
 
-}
+        if( tokens[0] == "professor_id" )
+        {
+            professor_id = parseInt( tokens[1].trim() );
+        }
+    }
+     //professor_id = "123";
+    console.log(requestSemester);
+//     var searchItem = 0;
+//    console.log(searchItem);
+    var jsonPayload2 = '{"professorid" : "' + professor_id + '", "semester" : "' + requestSemester + '", "year" : "' + requestYear + '"}';
+    
+   
+
+    var request = new XMLHttpRequest();
+        request.open("POST",deleteRequestUrl, true);
+        request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        try {
+            request.onreadystatechange = function()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {    
+                var jsonObject = JSON.parse(request.responseText);
+                var endpointmsg = jsonObject['msg'];
+                // console.log(endpointmsg);
+                var errormsg = endpointmsg.split('request.').pop();
+               // console.log(errormsg);
+                if (errormsg === "done")
+                    {
+                        document.getElementById("error").innerHTML = "Request is deleted successfully!";
+                        document.getElementById("error").style.color = "green";                       
+
+                  document.getElementById("booklist").innerHTML= "";
+
+                }
+
+                if (errormsg !== "done")
+                    {
+                       document.getElementById("error").innerHTML = "Request does not exist";
+                       document.getElementById("error").style.color = "red"; 
+                }
+            }
+        };
+            request.responseType="text";
+            request.send(jsonPayload2);
+        }
+        catch(error)
+        {
+            document.getElementById("error").innerHTML = error.message;
+            document.getElementById("error").style.color = "red";
+        }
+    }
