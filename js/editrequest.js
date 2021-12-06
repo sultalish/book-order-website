@@ -25,7 +25,7 @@ function listbooks() {
             professor_id = parseInt( tokens[1].trim() );
         }
     }
-     professor_id = "123";
+     //professor_id = "123";
     console.log(requestSemester);
 //     var searchItem = 0;
 //    console.log(searchItem);
