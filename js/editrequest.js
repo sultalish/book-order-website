@@ -5,15 +5,14 @@ let deleteRequestUrl = './src/deleterequest.php';
 let editBookUrl = './src/editbook.php';
 
 var jsonArray, i, professor_id;
-function listbooks(id) {
+function listbooks() {
     'use strict';
-    var requestYear = document.getElementById("year");
-    var requestSemester = document.getElementById("semester");
+    var requestYear = document.getElementById("year").value;
+    var requestSemester = document.getElementById("semester").value;
      document.getElementById("error").innerHTML = "";
     var List = document.getElementById("booklist");
     List.innerHTML = "";
 
-     professor_id = id;
     var data = document.cookie;
     var splits = data.split(";");
     for(var i = 0; i < splits.length; i++)
@@ -26,20 +25,24 @@ function listbooks(id) {
             professor_id = parseInt( tokens[1].trim() );
         }
     }
-    var searchItem = 0;
-   console.log(searchItem);
+     professor_id = "123";
+    console.log(requestSemester);
+//     var searchItem = 0;
+//    console.log(searchItem);
     var jsonPayload = '{"professorid" : "' + professor_id + '", "semester" : "' + requestSemester + '", "year" : "' + requestYear + '"}';
     
    
 
     var request = new XMLHttpRequest();
-    request.open("POST", productUrl, true);
+    request.open("POST", searchRequestUrl, true);
     request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try {
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                jsonArray = JSON.parse(request.responseText);
-               var id=0;
+               //var id=0;
+
+               console.log(jsonArray);
                        
                 for (i = 0; i < jsonArray.length; i++) {
                 var editButton =` <button type="button" id="editBook" class="btn btn-default" data-toggle="modal" data-target="#editBookModal" onclick="setIndex(${i});"> 
@@ -52,22 +55,15 @@ function listbooks(id) {
                     <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row"> 
                                                 
                         <div class="media-body"> 
-                            <h6 class="media-title font-weight-semibold"> ${jsonArray[i].ISBN} | $ ${jsonArray[i].title} </h6>                           
-                            <p class="mb-3">${jsonArray[i].author} </p>
-                            <p class="mb-3">${jsonArray[i].publisher} </p> 
- 
-                            <ul class="list-inline list-inline-dotted mb-0"> 
-                                <li class="list-inline-item">
-                                <p class="mb-3">${jsonArray[i].bookedition}  </p>
-
-                                </li>                                 
-                            </ul>                             
+                            <p class="mb-3">ISBN:  ${jsonArray[i].ISBN} </p>
+                            <p class="mb-3">Book Title${jsonArray[i].title} </p>
+                            <p class="mb-3">Author: ${jsonArray[i].author} </p>
+                            <p class="mb-3">Publisher: ${jsonArray[i].publisher} </p> 
+                            <p class="mb-3">Edition: ${jsonArray[i].bookedition} </p> 
+                            <p class="mb-3">Class ID: ${jsonArray[i].classID} </p> 
+                                                       
                         </div>     
-                        <li class="list-inline-item"> 
-                                                                                                
-                            
-                            <div class="text-muted">| ${jsonArray[i].classID} </div>
-                        </li> 
+                        
                         <li>
                             ${editButton} &nbsp; ${deleteButton}
                          </li>                       
@@ -75,7 +71,7 @@ function listbooks(id) {
                     </div>                     
                 </div> `;                
 
-                 List.innerHTML += row; 
+                booklist.innerHTML += row; 
 
                 }
             
@@ -232,3 +228,9 @@ function listbooks(id) {
     
 //     return true;
 // }
+
+
+function deleteRequest(){
+
+
+}

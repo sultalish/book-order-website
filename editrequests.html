@@ -7,13 +7,11 @@
         <title>Professor Dashboard</title>
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/dashStyle.css" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="css/style.css" rel="stylesheet">
         <link rel="shortcut icon" href="img/logo.png">
         <script src="js/jquery.min.js"></script>
         <script src="js/readCookie.js"></script>
-        <script src="js/newRequest.js"></script>
         <script src="js/editrequest.js"></script>
 
      
@@ -49,7 +47,7 @@
                 </div>               
             </div>
         </nav>
-        <h3 >Add New Request Form</h3>
+        <h3 >Edit Requests</h3>
 
         <div class="center">
             <label >Semester:</label>
@@ -60,11 +58,11 @@
             </select><span></span>
             <label >Year:</label>
             <input type="number" id="year" min="2018" max="2030" step="1" value="2021" />
-            <button type="button" class="btn btn-default" onclick="listbooks(0)">Search</button> 
+            <button type="button" class="btn btn-default" onclick="listbooks()">Search</button> 
             <button type="button" class="btn btn-default" onclick="">Delete</button> 
         </div>
 
-            <div class="center" id="booklist">
+            <div class="center" id="booklist" class="container">
                                 
             </div>                     
 

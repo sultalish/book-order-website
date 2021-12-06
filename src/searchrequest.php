@@ -16,10 +16,9 @@
     $sql = " SELECT `book`.`ISBN`, `book`.`title`, `book`.`author`, `book`.`bookedition`, `book`.`publisher`,
  `request`.`classID`
    FROM
-            `book`
-       AND `request`
+            `book`, `request`
     WHERE
-        (`book`.`ISBN` = `request`.`ISBN`AND `request`.`professorID` =  '".$profesorid."' AND `request`.`semester` =  '".$semester."' AND `request`.`year` =  '".$year."')
+        (`book`.`ISBN` = `request`.`ISBN`AND `request`.`professorID` =  '".$professorid."' AND `request`.`semester` =  '".$semester."' AND `request`.`semyear` =  '".$year."')
         ORDER BY ISBN DESC ;";
 
 
@@ -27,16 +26,16 @@
     
 
 
-    if ($conn->connect_error) 
+    if ($con->connect_error) 
 	{
-		returnError( $conn->connect_error );
+		returnError( $con->connect_error );
 	} 
 	else
 	{
 		
-         $result = $conn->query($sql);
+         $result = $con->query($sql);
         if (!$result) {
-            trigger_error('Invalid query: ' . $conn->error);
+            trigger_error('Invalid query: ' . $con->error);
         }
         if ($result->num_rows > 0)
         {
@@ -71,7 +70,7 @@
         }
 
         $result -> free_result();
-		$conn->close();
+		$con->close();
         
 	}
 
