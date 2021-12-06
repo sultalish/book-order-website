@@ -1,22 +1,23 @@
 //Code by Alisher Sultangazin
-let loginUrl = './src/login.php';
+let loginUrl = './src/login_staff.php';
 
 
-var staff_id = 0;
+var adminID = 0;
 
 var loginName = "";
 var password = "";
 var loginPassword = "";
 
-function login() {
+function login_staff() {
+    console.log(md5(123123));
     "use strict";
-    var u_fullName = "";
+    var staff_email = "";
 
-    loginName = document.getElementById("username").value;
-    password = document.getElementById("userpassword").value;
+    loginName = document.getElementById("staff_username").value;
+    password = document.getElementById("staffpassword").value;
     loginPassword = md5(password);
 
-    document.getElementById("stafflogstatus").innerHTML = "";
+    document.getElementById("logstatus").innerHTML = "";
 
     if (checkEmaillog(loginName) && checkPasswordlog(password)) {
         loginPassword = md5(password);
@@ -31,18 +32,18 @@ function login() {
                     console.log(request);
 
                     var jsonObject = JSON.parse(request.responseText);
-                    staff_id = jsonObject.staff_id;
+                    adminID = jsonObject.adminID;
                     var endpointmsg = jsonObject.error;
-                    if (professor_id < 1) {
-                        document.getElementById("stafflogstatus").innerHTML = endpointmsg;
-                        document.getElementById("stafflogstatus").style.color = "red";
+                    if (adminID < 1) {
+                        document.getElementById("logstatus").innerHTML = endpointmsg;
+                        document.getElementById("logstatus").style.color = "red";
                         return;
                     }
 
-                    u_fullName = jsonObject.fullName;
+                    staff_email = jsonObject.email;
                     //console.log(customer_id);
                     saveCookie();
-                    window.location.href = "dashboard.html";
+                    window.location.href = "staff_panel.html";
 
                 }
             };
@@ -52,10 +53,33 @@ function login() {
         }
 
         catch (err) {
-            document.getElementById("stafflogstatus").innerHTML = err.message;
+            document.getElementById("logstatus").innerHTML = err.message;
         }
 
     }
+}
+
+
+function saveCookie() {
+    var minutes = 100;
+    var date = new Date();
+    date.setTime(date.getTime() + (minutes * 60 * 1000));
+    document.cookie = "adminID=" + adminID + ";expires=" + date.toGMTString();
+}
+
+function readCookie() {
+    adminID = -1;
+    var data = document.cookie;
+    var splits = data.split(";");
+    for (var i = 0; i < splits.length; i++) {
+        var thisOne = splits[i].trim();
+        var tokens = thisOne.split("=");
+
+        if (tokens[0] == "adminID") {
+            adminID = parseInt(tokens[1].trim());
+        }
+    }
+
 }
 
 function checkEmaillog(email) {
@@ -83,15 +107,21 @@ function checkEmaillog(email) {
 function checkPasswordlog(password) {
     "use strict";
     if (password.length === 0) {
-        document.getElementById("stafflogstatus").innerHTML = "Password is required!";
-        document.getElementById("stafflogstatus").style.color = "red";
+        document.getElementById("logstatus").innerHTML = "Password is required!";
+        document.getElementById("logstatus").style.color = "red";
         return false;
     }
     if (password.length < 5) {
-        document.getElementById("stafflogstatus").innerHTML = "Your password must be at least 5 characters long, should not exceed 45 characters!";
-        document.getElementById("stafflogstatus").style.color = "red";
+        document.getElementById("logstatus").innerHTML = "Your password must be at least 5 characters long, should not exceed 45 characters!";
+        document.getElementById("logstatus").style.color = "red";
         return false;
     }
 
     return true;
+}
+
+function logout_staff() {
+    adminID = 0;
+    document.cookie = "adminID= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    window.location.href = "./login_staff.html";
 }

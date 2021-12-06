@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Bookstrore Professors Login</title>
+    <title>Bookstrore Admin Login</title>
     <script src="js/md5.js"></script>
     <script src="js/login_staff.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -38,10 +38,10 @@
             <form style="text-align: center;">
                 <input type="text" id="staff_username" class="input-box" placeholder="Staff Email">
                 <input type="password" id="staffpassword" class="input-box" placeholder="Password">
-                <button type="button" class="btn" onclick="login();">Login</button>
+                <button type="button" class="btn" onclick="login_staff();">Login</button>
                 <button type="button" class="btn bg-dark" onclick="resetPassword();">Reset Password</button>
             </form>
-            <p id="stafflogstatus" style="font-size: 0.5em"></p>
+            <p id="logstatus" style="font-size: 0.5em"></p>
         </div>
     </section>
     <footer class="bg-dark pt-0 fixed-bottom text-white">

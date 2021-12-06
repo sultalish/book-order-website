@@ -6,8 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/staff_panel.css">
+    <script src="js/signup_staff.js"></script>
+    <script src="js/md5.js"></script>
     <script src="js/staff_panel.js"></script>
+    <script src="js/showFaculty.js"></script>
     <title>Document</title>
+
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+    </style>    
 </head>
 
 <body>
@@ -16,25 +37,29 @@
             <i class="fa fa-home"></i>
             <span class="home">Home</span>
         </a>
-        <a href="#add-admin" class="add-admin-tooltip">
+        <a href="#add-admin" class="home-tooltip" id="add-admin-icon">
             <i class="fa fa-user-plus"></i>
-            <span class="add-admin">Add Admin</span>
+            <span class="home">Add Admin</span>
         </a>
-        <a href="#" class="db-access-tooltip">
+        <a href="#db-access" class="home-tooltip">
             <i class="fa fa-database"></i>
-            <span class="db-access">Access DB</span>
+            <span class="home">Access DB</span>
         </a>
-        <a href="#send-email" class="delete-admin-tooltip">
+        <a href="#send-email" class="home-tooltip">
             <i class="fa fa-envelope-square"></i>
-            <span class="delete-admin">Send email</span>
+            <span class="home">Send email</span>
         </a>
-        <a href="#send-invitation" class="delete-admin-tooltip">
+        <a href="#send-invitation" class="home-tooltip">
             <i class="fa fa-handshake-o"></i>
-            <span class="delete-admin">Send Invitation</span>
+            <span class="home">Send Invitation</span>
         </a>
-        <a href="#" class="delete-admin-tooltip">
+        <a href="#delete-admin" class="home-tooltip" id="delete-admin-icon">
             <i class="fa fa-trash"></i>
-            <span class="delete-admin">Delete Admin</span>
+            <span class="home">Delete Admin</span>
+        </a>
+        <a href="#" class="home-tooltip" onclick="logout_staff();">
+            <i class=" fa fa-sign-out"></i>
+            <span class="home">Sign out</span>
         </a>
     </div>
 
@@ -44,28 +69,41 @@
                 <h1>Add new Admin</h1>
                 <p>Please fill in this form to create an account for new Admin.</p>
                 <hr>
+                    <label for="new_admin_useremail"><b>Email</b></label>
+                    <input type="text" id="new_admin_useremail" placeholder="Enter Email" name="new_admin_useremail" required>
 
-                <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" required>
+                    <label for="new_admin_password"><b>Password</b></label>
+                    <input type="password" id="new_admin_password" placeholder="Enter Password" name="new_admin_password" required>
 
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                    <label for="new_admin_confirmpassword"><b>Repeat Password</b></label>
+                    <input type="password" id="new_admin_confirmpassword" placeholder="Repeat Password" name="new_admin_confirmpassword" required>
 
-                <label for="psw-repeat"><b>Repeat Password</b></label>
-                <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                    <div class="clearfix">
+                        <button type="button" class="cancelbtn" onclick="reset_add_new_admin();">Reset</button>
+                        <button type="button" class="signupbtn" onclick="signup_new_admin();">Create an Account and Send an Email</button>
+                    </div>
 
-                <div class="clearfix">
-                    <button type="button" class="cancelbtn">Reset</button>
-                    <button type="submit" class="signupbtn">Create an Account and Send an Email</button>
-                </div>
+                <p id="upstatus_staff" style="font-size: 0.5em"></p>
             </div>
         </form>
+    </div>
+
+    <div id="db-access">
+        <div class="container">
+            <table id="table-staff-db">
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail address</th>
+                </tr>
+            </table>
+            <button type="button" class="signupbtn" onclick="readDB();">Click to Load the DB</button>
+        </div>
     </div>
 
     <div id="send-email">
         <form action="/action_page.php">
             <div class="container">
-                <h1>Send email to Professor to submit books</h1>
+                <h1>Send email to Professor to submit books by deadline</h1>
                 <hr>
 
                 <label for="email"><b>Email</b></label>
@@ -98,6 +136,38 @@
 
                 <button type="submit" class="submit-email-prof">Send email</button>
 
+            </div>
+        </form>
+    </div>
+
+    <div id="delete-admin">
+        <form action="php">
+            <div class="container">
+                <h1>Delete an Admin</h1>
+                <hr>
+
+                Select from a menu:
+            </div>
+        </form>
+    </div>
+
+    <div id="change-password">
+        <form action="php">
+            <div class="container">
+                <h1>Change Password</h1>
+                <hr>
+                    <label for="change_password_staff"><b>Password</b></label>
+                    <input type="password" id="change_password_staff" placeholder="Enter Password" name="change_password_staff" required>
+
+                    <label for="change_password_staff_confirm"><b>Repeat Password</b></label>
+                    <input type="password" id="change_password_staff_confirm" placeholder="Repeat Password" name="change_password_staff_confirm" required>
+
+                    <div class="clearfix">
+                        <button type="button" class="cancelbtn" onclick="reset_change_password_staff();">Reset</button>
+                        <button type="button" class="signupbtn" onclick="change_password_for_staff();">Change Password</button>
+                    </div>
+
+                <p id="upstatus_staff_reset" style="font-size: 0.5em"></p>
             </div>
         </form>
     </div>
