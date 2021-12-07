@@ -1,6 +1,6 @@
+//Code by Taoufik Laaroussi
 
-
-
+//function to read the cookie
 function readCookie(){
 
     var data = document.cookie;
@@ -20,6 +20,7 @@ function readCookie(){
         return professorID;
 }
 
+//function to logout and end user session
 function logout()
 {
 	var professor_id = 0;

@@ -1,6 +1,7 @@
+
 <?php
-
-
+//This code is developed by Taoufik Laaroussi
+      //Create connexion with database
       $dbServerName = "localhost";
       $dbUserName = "root";
       $dbPassword = "";

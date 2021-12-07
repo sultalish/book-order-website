@@ -1,25 +1,28 @@
 
+
+
 <?php
+//This code is developed by Taoufik Laaroussi
+//call dbxonnect for establishing connexion with databse
   require_once('dbconnect.php');
 
   $inputFromJson = json_decode(file_get_contents('php://input'), true);
 
+  //Read the content of json file
     $fullName = $inputFromJson['fullName'];
     $password =  $inputFromJson['password'];
     $phoneNumber = $inputFromJson['phoneNumber'];
     $email = $inputFromJson['email'];
     $sql;
     
-    //$confirmCode = rand(100000, 1000000);
-    //echo($fullName);
-
-    //Start Reading Sequence
+    //Test the connexion with databse
         if ($con->connect_error)
         {
             error( $con->connect_error);
         }
        else
        {
+         //Sql quesry to add new the professor account
         $sql = "INSERT INTO professor (fullname, email, passCode, phoneNum) 
         VALUES ('". $fullName ."','". $email ."','". $password ."','". $phoneNumber ."');";
     
@@ -29,11 +32,13 @@
         }
         else
         {
+          //Professor added successfully
           returnInfo("done");
         }
         $con->close();
       }    
     
+    //Function to return a json file to the frontend
   function returnError($error){
         $retval = '{"msg":"' . $error .'"}';
     outputJson($retval);

@@ -1,13 +1,16 @@
 //Code by Taoufik Laaroussi
 
+//variable to connection with php file
 let newRequestUrl = './src/newRequest.php';
 
-
+//Function to create new request
 function newRequest()
 {
     "use strict";
+    //read the cookie
     var userID = readCookie();
-    
+
+    //read input    
     var semester = document.getElementById("semester").value;
     var year = document.getElementById("year").value;
     var title = document.getElementById("booktitle").value;
@@ -25,10 +28,13 @@ function newRequest()
     document.getElementById("classid").value = "";
     document.getElementById("requestStatus").innerHTML= "";
 
+    //validate input
  if (validateInput(isbn, classid, userID))
     {
+        //create json file
         var json = '{"userid" : "' + userID + '", "semester" : "' + semester + '", "year" : "' + year + '", "title" : "' + title + '", "author" : "' + author + '", "publisher" : "' + publisher + '", "edition" : "' + edition + '", "title" : "' + title + '", "isbn" : "' + isbn + '", "classID" : "' + classid + '"}';
        
+        //send the json file to backend using POST request
         var request = new XMLHttpRequest();
         request.open("POST", newRequestUrl, true);
         request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -43,17 +49,17 @@ function newRequest()
                 var errormsg = endpointmsg.split('request.').pop();
                // console.log(errormsg);
                 if (errormsg === "done")
-                    {
-                        document.getElementById("requestStatus").value = "Book added successfully!";
-                        document.getElementById("requestStatus").style.color = "green";                       
+                {
 
+                    
+                        document.getElementById("requestStatus").innerHTML = "Book and request added successfully!";
+                        document.getElementById("requestStatus").style.color = "green";  
                         document.getElementById("booktitle").value = "";
                         document.getElementById("authornames").value = "";
                         document.getElementById("edition").value = "";
                         document.getElementById("publisher").value = "";
                         document.getElementById("isbn").value = "";
                         document.getElementById("classid").value = "";
-
                 }
 
                 if (errormsg !== "done")
@@ -74,6 +80,7 @@ function newRequest()
     }
 }
 
+//check class id must be 3 characters or more
 function checkclassID(classID)
 {
     if (classID.length <= 3)
@@ -85,6 +92,7 @@ function checkclassID(classID)
     return true;
 }
 
+//isbn must be no less than 3 digits
 function checkisbn(isbn)
 {
     "use strict";
@@ -98,6 +106,7 @@ function checkisbn(isbn)
     return true;
 }
 
+// check the cookie if the user is signed in
 function checkuserID(userID)
 {
     "use strict";

@@ -2,13 +2,15 @@
 
 let signUpUrl = './src/passwordReset.php';
 
-
+//Function to reset professor password
 function resetPassword()
 {
     "use strict";
 
+    //read cookie
     var id = readCookie();
     
+    //read user input
     var password = document.getElementById("passRes").value;
     var confirmPassword = document.getElementById("confirmpassRes").value;
 
@@ -17,11 +19,16 @@ function resetPassword()
     
     document.getElementById("resPassStatus").innerHTML = "";
 
+    //validate user input then send the json file to the backend
  if (validateInput(id, password, confirmPassword))
     {
+        //hash the user passsword
         var hashedPassword = md5(password);
+        //create json file to send it the backend using POST request
         var json = '{"professorID" : "' + id + '", "password" : "' + hashedPassword + '"}';
        
+
+        //send data to backencd using POST
         var request = new XMLHttpRequest();
         request.open("POST", signUpUrl, true);
         request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -58,6 +65,7 @@ function resetPassword()
     }
 }
 
+//Function to chekc password matching
 function checkConfirmPassword(confirmPassword, password)
 {
     if (confirmPassword !== password)
@@ -69,7 +77,7 @@ function checkConfirmPassword(confirmPassword, password)
     return true;
 }
 
-
+//function to check password is 5 characters and less than 45
  function checkPassword(password)
 {
     "use strict";

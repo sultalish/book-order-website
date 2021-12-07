@@ -1,7 +1,8 @@
 
 
 <?php
-
+//This code is developed by Taoufik Laaroussi
+//Function to send email using Xampp SMTP server
  function sendEmail($email, $confirmCode){
       
     $to_email = $email;
