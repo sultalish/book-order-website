@@ -1,22 +1,24 @@
 
 
 <?php
-
+//This code is developed by Taoufik Laaroussi
+    //Call database connexion file
     require_once('dbconnect.php');
+    //Get the json file
  $inputFromJson = json_decode(file_get_contents('php://input'), true);
 
+ //Output the content of the json file
     $email = $inputFromJson['userName'];
     $password = $inputFromJson['password'];
     $sql;
-   // echo ($email);
-   // echo ($password);
-    //Start Reading Sequence
+ 
+        //check the connexion with database
         if ($con->connect_error)
         {
             error( $con->connect_error);
         }
         else{
-            //query to DB
+            //query to execute and select everything from professor table
             $sql = "SELECT * FROM professor WHERE email = '".$email."' and passCode = '".$password."';";
             $result = mysqli_query($con, $sql);
             $numRows = mysqli_num_rows($result);
@@ -36,7 +38,9 @@
                 }
             $con->close();
         }
-    //FUNCTIONS
+
+
+    ////Function to return a json file to the frontend
 
     function error($err){
         $result = '{"professorID":0, "error":"' . $err . '"}';

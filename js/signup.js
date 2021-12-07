@@ -2,11 +2,12 @@
 
 let signUpUrl = './src/signup.php';
 
-
+//function to create new professor account
 function signup()
 {
     "use strict";
     
+    //read user input
     var email = document.getElementById("useremail").value;
     var fullname = document.getElementById("fullname").value;
     var password = document.getElementById("userpass").value;
@@ -15,11 +16,17 @@ function signup()
     
     document.getElementById("upstatus").innerHTML = "";
 
+
+//Validate user input
  if (validateInput(fullname, email, phoneNumber, password, confirmPassword))
     {
+        //hash password
         var hashedPassword = md5(password);
+
+        //create json file
         var json = '{"fullName" : "' + fullname + '", "password" : "' + hashedPassword + '", "phoneNumber" : "' + phoneNumber + '", "email" : "' + email + '"}';
        
+        //send POST request to backend
         var request = new XMLHttpRequest();
         request.open("POST", signUpUrl, true);
         request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -30,9 +37,9 @@ function signup()
             {    
                 var jsonObject = JSON.parse(request.responseText);
                 var endpointmsg = jsonObject['msg'];
-                // console.log(endpointmsg);
                 var errormsg = endpointmsg.split('professor.').pop();
-               // console.log(errormsg);
+          
+               //user added successfully
                 if (errormsg === "done")
                     {
                         document.getElementById("upstatus").innerHTML = "Signed UP successfully!";
@@ -45,7 +52,7 @@ function signup()
                         document.getElementById("useremail").value = "";
 
                 }
-
+                //error adding a user
                 if (errormsg !== "done")
                     {
                        document.getElementById("upstatus").innerHTML = "Email already used";
@@ -64,6 +71,7 @@ function signup()
     }
 }
 
+//function to check matching passwords
 function checkConfirmPassword(confirmPassword, password)
 {
     if (confirmPassword !== password)
@@ -74,7 +82,7 @@ function checkConfirmPassword(confirmPassword, password)
     }
     return true;
 }
-
+//check full name format
 function checkFullName(name)
 {
     "use strict";
@@ -100,6 +108,7 @@ function checkFullName(name)
     return true;
 }
 
+//check password more than 5 and less than 45 characters
  function checkPassword(password)
 {
     "use strict";
@@ -118,6 +127,7 @@ function checkFullName(name)
     return true;
 }
 
+//check phone number is 10 digits
 function checkPhoneNumber(phoneNumber)
 {
     "use strict";
@@ -147,6 +157,7 @@ function checkPhoneNumber(phoneNumber)
     return true;
 }
 
+//check email format
 function checkEmail(email)
 {
     "use strict";
@@ -173,6 +184,7 @@ function checkEmail(email)
     return true;
 }
 
+//invoque all validation functions
 function validateInput(fullName, email, phoneNumber, password, confirmPassword )
 {
     "use strict";

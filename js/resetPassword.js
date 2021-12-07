@@ -1,19 +1,27 @@
+//Code by Taoufik Laaroussi
+
 let resetPassUpUrl = './src/resetPassword.php';
 
-
+//function to reset user password ang generate a random password to be sent to the user email
 function resetPassword()
 {
     "use strict";
     
+    //read user input
     var email = document.getElementById("username").value;
 
+//check emai format
  if (checkResEmail(email))
 
     {
+        //generate a random number of six digits then hash it
         var passCode = Math.floor(100000 + Math.random() * 900000);
         var hashedResPassword = md5(passCode);
+
+        //create json file
         var json = '{"email" : "' + email + '", "PassCode" : "' + passCode + '", "password" : "' + hashedResPassword + '"}';
        
+        //send the json file to backend using POST request
         var request = new XMLHttpRequest();
         request.open("POST", resetPassUpUrl, true);
         request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -22,15 +30,18 @@ function resetPassword()
         {
             if (this.readyState == 4 && this.status == 200)
             {    
+                //parse the backend return
                 var jsonObject = JSON.parse(request.responseText);
                 var errormsg = jsonObject.msg;
                 console.log(errormsg);
+
+                //case password is updated
                 if (errormsg === "passwordupdated")
                     {
                         document.getElementById("logstatus").innerHTML = "Check you email for temporary password!";
                         document.getElementById("logstatus").style.color = "green";                       
                 }
-
+                //case emai provided is not foound
                 if (errormsg === "Emailnotfound")
                   {
                        document.getElementById("logstatus").innerHTML = "Email not found";
@@ -52,7 +63,7 @@ function resetPassword()
 
 
 
-
+//function to check emai validity
 function checkResEmail(email)
 {
     "use strict";

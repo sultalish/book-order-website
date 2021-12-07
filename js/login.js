@@ -8,21 +8,29 @@ var loginName = "";
 var password="";
 var loginPassword = "";
 
+//function to login
 function login()
 {   
     "use strict";
 	 var u_fullName = "";
 
+     //get the input
 	 loginName = document.getElementById("username").value;
 	 password = document.getElementById("userpassword").value;
      loginPassword = md5(password);
 
 	document.getElementById("logstatus").innerHTML = "";
 
+    //if stattement to validate the input
 	if(checkEmaillog(loginName) && checkPasswordlog(password)){
+
+        //Hash user password
 		 loginPassword = md5(password);
+
+         //Create a json file in order to send it to backend
 		var jsonPayload = '{"userName" : "' + loginName + '", "password" : "' + loginPassword + '"}';
 
+        //send the json file using POST request
     	var request = new XMLHttpRequest();
 	    request.open("POST", loginUrl, true);
 	    request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -31,7 +39,6 @@ function login()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				console.log(request);
 
 				var jsonObject = JSON.parse(request.responseText);
                 professor_id = jsonObject.professorID;
@@ -63,7 +70,7 @@ function login()
 }
 }
 
-
+//Function to logout and kill the cookie
 function logout()
 {
 	professor_id = 0;
@@ -71,6 +78,7 @@ function logout()
 	window.location.href = "./index.html";
 }
 
+//Function to create cookie
 function saveCookie()
 {
 	var minutes = 20;
@@ -79,6 +87,7 @@ function saveCookie()
 	document.cookie = "professor_id=" + professor_id + ";expires=" + date.toGMTString();
 }
 
+//finction to read the cookie
 function readCookie()
 {
 	professor_id = -1;
@@ -97,6 +106,7 @@ function readCookie()
 
 }
 
+//function to check email validity
 function checkEmaillog(email)
 {
     "use strict";
@@ -122,7 +132,7 @@ function checkEmaillog(email)
     return true;
 }
 
-
+//function to check password length
 function checkPasswordlog(password)
 {
     "use strict";
