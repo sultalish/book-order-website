@@ -7,3 +7,4 @@
       $dbName = "bookstore";
 
       $con = mysqli_connect($dbServerName, $dbUserName, $dbPassword,$dbName);
+?>
