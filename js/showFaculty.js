@@ -12,7 +12,7 @@ function readDB() {
         }).catch(function(err) {
         console.log ('ERRORE ', err);
     });
-}   
+}
 
 function readDBadmins() {
     fetch("./src/showAdminFaculty.php").then(function(response) {
@@ -25,7 +25,7 @@ function readDBadmins() {
         }).catch(function(err) {
         console.log ('ERRORE ', err);
     });
-}  
+}
 
 //     console.log("KEK");
 //     $.get("./src/showFaculty.php", function(data, status) {

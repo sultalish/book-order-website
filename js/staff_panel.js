@@ -15,7 +15,7 @@ function reset_change_password_staff()
 function change_password_for_staff()
 {
     "use strict";
-    
+
     var password = document.getElementById("change_password_staff").value;
     var confirmPassword = document.getElementById("change_password_staff_confirm").value;
 
@@ -23,7 +23,7 @@ function change_password_for_staff()
     {
         var hashedPassword = md5(password);
         var json = '{"password" : "' + hashedPassword + '", "adminID" : "' + adminID + '"}';
-       
+
         var request = new XMLHttpRequest();
         request.open("POST", resetPasswordURL, true);
         request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -31,7 +31,7 @@ function change_password_for_staff()
             request.onreadystatechange = function()
         {
             if (this.readyState == 4 && this.status == 200)
-            {    
+            {
                 var jsonObject = JSON.parse(request.responseText);
                 // var endpointmsg = jsonObject['msg'];
                 var endpointmsg = jsonObject['msg'];
@@ -41,7 +41,7 @@ function change_password_for_staff()
                 if (errormsg === "passwordupdated")
                     {
                         document.getElementById("upstatus_staff_reset").innerHTML = "Changed password successfully!";
-                        document.getElementById("upstatus_staff_reset").style.color = "green";                       
+                        document.getElementById("upstatus_staff_reset").style.color = "green";
 
                         document.getElementById("change_password_staff").value = "";
                         document.getElementById("change_password_staff_confirm").value = "";
