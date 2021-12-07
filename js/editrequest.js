@@ -48,7 +48,7 @@ function listbooks() {
                 var editButton =` <button type="button" id="editBook" class="btn btn-default" data-toggle="modal" data-target="#editBookModal" onclick="setIndex(${i});"> 
                 Edit
                 </button>`;
-                var deleteButton =` <button type="button" id="deleteBook" class="btn btn-default" onclick="setIndex(${i});">
+                var deleteButton =` <button type="button" id="deleteBook" class="btn btn-default" onclick="setIndex2(${i});">
                 Delete
                 </button>`;   
                 var row = ` <div class="card card-body"> 
@@ -56,7 +56,7 @@ function listbooks() {
                                                 
                         <div class="media-body"> 
                             <p class="mb-3">ISBN:  ${jsonArray[i].ISBN} </p>
-                            <p class="mb-3">Book Title${jsonArray[i].title} </p>
+                            <p class="mb-3">Book Title: ${jsonArray[i].title} </p>
                             <p class="mb-3">Author: ${jsonArray[i].author} </p>
                             <p class="mb-3">Publisher: ${jsonArray[i].publisher} </p> 
                             <p class="mb-3">Edition: ${jsonArray[i].bookedition} </p> 
@@ -95,139 +95,167 @@ function listbooks() {
     }
 }
 
-// function setIndex(i, id){
+function setIndex(i, id){
+    index = i;
 
-//     index = i;
-
-//     document.getElementById("customerId").innerHTML = "";
-//     document.getElementById("productName").innerHTML =  "";
-//     document.getElementById("productId").innerHTML =  "";
-//     document.getElementById("productDescription").innerHTML =  "";
-//     document.getElementById("errortext").innerHTML = "";
+    document.getElementById("editISBN").innerHTML = "";
+    document.getElementById("editTitle").value = "";
+    document.getElementById("editAuthor").value = "";
+    document.getElementById("editEdition").value = "";
+    document.getElementById("editPublisher").value = "";
+   
 
 
   
-//   /* console.log(i);
-//     console.log(jsonArray[index].customer_name);
-//     console.log(jsonArray[index].product_name);
-//     console.log(jsonArray[index].rating);
-//     console.log(jsonArray[index].review_description); */
+//   console.log(i);
+//     console.log(jsonArray[index].ISBN);
+//     console.log(jsonArray[index].titl);
+//     console.log(jsonArray[index].author);
+//     console.log(jsonArray[index].edition);
 
-//     document.getElementById("customerId").innerHTML = customer_id;
-//     document.getElementById("customerId").style.color = "gray";
-//     document.getElementById("productId").innerHTML = jsonArray[index].product_id;
-//     document.getElementById("productId").style.color = "gray";
-
-//     document.getElementById("productName").innerHTML = jsonArray[index].product_name;
-//     document.getElementById("productName").style.color = "black";
-
-//     document.getElementById("productDescription").innerHTML = jsonArray[index].product_descrip;
-//     document.getElementById("productDescription").style.color = "black";
+    document.getElementById("editISBN").innerHTML = jsonArray[index].ISBN;
+    document.getElementById("editISBN").style.color = "gray";
+    document.getElementById("editTitle").value = jsonArray[index].title;
+    document.getElementById("editAuthor").value = jsonArray[index].author;
+    document.getElementById("editEdition").value = jsonArray[index].bookedition;
+    document.getElementById("editPublisher").value = jsonArray[index].publisher;
 
 
-//     document.getElementById('imageFrame1').src = jsonArray[index].product_image;
 
-// }
+}
+function setIndex2(i){
+    index = i;
 
-// function addNewReview(){
+    var deleteISBN = jsonArray[index].ISBN;
 
-//  "use strict";
+    deleteBook(deleteISBN);
+}
+
+function editBook(){
+    'use strict';
+   var editISBN = document.getElementById("editISBN").innerHTML;
+    var editTitle = document.getElementById("editTitle").value;
+    var editAuthor = document.getElementById("editAuthor").value;
+    var editEdition = document.getElementById("editEdition").value;
+    var editPublisher = document.getElementById("editPublisher").value;
+
     
-//     var customerid = document.getElementById("customerId").innerHTML;
-//     var productid = document.getElementById("productId").innerHTML;
-//     var reviewtext = document.getElementById("reviewBox").value;
+     document.getElementById("error").innerHTML = "";
+
     
-//     document.getElementById("customerId").innerHTML = "";
-//     document.getElementById("productId").innerHTML = "";
-//     document.getElementById("reviewBox").value = "";
-//     document.getElementById("errortext").innerHTML = "";
-
-//   var ratingValue = $("input:radio[name=ratings]:checked").val()
-
-//        /* console.log(productid);
-//          console.log(customerid);
-//           console.log(reviewtext);
-//            console.log(ratingValue);*/
-
-//  if (reviewText(reviewtext))
-//     {
-        
-//         var json1 = '{"customer_id" : "' + customerid + '", "product_id" : "' + productid + '", "review_description" : "' + reviewtext + '", "rating" : "' + ratingValue + '"}';
-       
-//         var request1 = new XMLHttpRequest();
-//         request1.open("POST", addReviewtUrl, true);
-//         request1.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-//         try {
-//             request1.onreadystatechange = function()
-//         {
-//             if (this.readyState == 4 && this.status == 200)
-//             {    
-//                 var jsonObject1 = JSON.parse(request1.responseText);
-//                 var endpointmsg = jsonObject1['msg'];
-//                 var errormsg = endpointmsg
-//                 //console.log(errormsg);
-//                 if (errormsg === "done")
-//                     {
-//                         document.getElementById("errortext").innerHTML = "Thank you.<br> Review added successfully";
-//                         document.getElementById("errortext").style.color = "green";                       
-
-//                         document.getElementById("reviewBox").value = "";
-
-//                         $("input:radio[name='ratings']").each(function(i) {
-//                              this.checked = false;
-//                                     });
-//                 }
-
-//                 if (errormsg === "ItemAlreadyreviewed")
-//                     {
-//                        document.getElementById("errortext").innerHTML = "Product already reviewed! <br> Please check you product list.";
-//                        document.getElementById("errortext").style.color = "red";
-//                        $("input:radio[name='ratings']").each(function(i) {
-//                              this.checked = false;
-//                                     });
-
-//                 }
-//             }
-//         };
-//             request1.responseType="text";
-//             request1.send(json1);
-//         }
-//         catch(error)
-//         {
-//             document.getElementById("errortext").innerHTML = error.message;
-//             document.getElementById("errortext").style.color = "red";
-//         }
-//     }
-
-// }
-
-
-// function reviewText(text)
-// {
-//     "use strict";
+    var jsonPayload2 = '{"isbn" : "' + editISBN + '", "title" : "' + editTitle + '","author" : "' + editAuthor + '", "edition" : "' + editEdition + '", "publisher" : "' + editPublisher + '"}';
     
-//     text = text.toLowerCase();
-//     var arrayText = text.split(" ");
-//     var arrayBadWords = ["fuck", "shit","asshole"];
-    
-//     if (text.length < 4)
-//     {
-//         document.getElementById("errortext").innerHTML = "Please write something about the Item!";
-//         document.getElementById("errortext").style.color = "red";
-//         return false;
-//     }
+   
 
-//         var foundBadWords = arrayText.filter(arrayText => arrayBadWords.includes(arrayText));
+    var request = new XMLHttpRequest();
+        request.open("POST", editBookUrl, true);
+        request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        try {
+            request.onreadystatechange = function()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {    
+                var jsonObject = JSON.parse(request.responseText);
+                var endpointmsg = jsonObject['msg'];
+                // console.log(endpointmsg);
+                var errormsg = endpointmsg.split('book.').pop();
+               // console.log(errormsg);
+                if (errormsg === "done")
+                    {
+                        document.getElementById("editBookStatus").innerHTML = "Book is changed successfully!";
+                        document.getElementById("editBookStatus").style.color = "green";                       
 
-//         console.log(foundBadWords);
-//     if (foundBadWords.length > 0){
-//         document.getElementById("errortext").innerHTML = "Please avoid bad words! " + foundBadWords.join(", ");
-//         document.getElementById("errortext").style.color = "red";
-//         return false;
-//     } 
+                        document.getElementById("editISBN").innerHTML = "";
+                        document.getElementById("editTitle").value = "";
+                        document.getElementById("editAuthor").value = "";
+                        document.getElementById("editEdition").value = "";
+                        document.getElementById("editPublisher").value = "";
+                    }
+
+                if (errormsg !== "done")
+                    {
+                       document.getElementById("editBookStatus").innerHTML = "Book does not exist";
+                       document.getElementById("editBookStatus").style.color = "red"; 
+                }
+            }
+        };
+            request.responseType="text";
+            request.send(jsonPayload2);
+        }
+        catch(error)
+        {
+            document.getElementById("editBookStatus").innerHTML = error.message;
+            document.getElementById("editBookStatus").style.color = "red";
+        }
+
+}
+
+
+function deleteBook(deletebookisbn) {
+    'use strict';
+    var deleteBook = deletebookisbn;
+    var requestYear = document.getElementById("year").value;
+    var requestSemester = document.getElementById("semester").value;
+     document.getElementById("error").innerHTML = "";
+
+    var data = document.cookie;
+    var splits = data.split(";");
+    for(var i = 0; i < splits.length; i++)
+    {
+        var thisOne = splits[i].trim();
+        var tokens = thisOne.split("=");
+
+        if( tokens[0] == "professor_id" )
+        {
+            professor_id = parseInt( tokens[1].trim() );
+        }
+    }
+     //professor_id = "123";
+    console.log(requestSemester);
+//     var searchItem = 0;
+//    console.log(searchItem);
+    var jsonPayload3 = '{"professorid" : "' + professor_id + '", "isbn" : "' + deleteBook + '", "semester" : "' + requestSemester + '", "year" : "' + requestYear + '"}';
     
-//     return true;
-// }
+   
+
+    var request = new XMLHttpRequest();
+        request.open("POST",deleteBookUrl, true);
+        request.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        try {
+            request.onreadystatechange = function()
+        {
+            if (this.readyState == 4 && this.status == 200)
+            {    
+                var jsonObject = JSON.parse(request.responseText);
+                var endpointmsg = jsonObject['msg'];
+                // console.log(endpointmsg);
+                var errormsg = endpointmsg.split('book.').pop();
+               // console.log(errormsg);
+                if (errormsg === "done")
+                    {
+                        document.getElementById("error").innerHTML = "Book is removed from request!";
+                        document.getElementById("error").style.color = "green";                       
+
+                  document.getElementById("booklist").innerHTML= "";
+
+                }
+
+                if (errormsg !== "done")
+                    {
+                       document.getElementById("error").innerHTML = "Request does not exist";
+                       document.getElementById("error").style.color = "red"; 
+                }
+            }
+        };
+            request.responseType="text";
+            request.send(jsonPayload3);
+        }
+        catch(error)
+        {
+            document.getElementById("error").innerHTML = error.message;
+            document.getElementById("error").style.color = "red";
+        }
+    }
 
 
 function deleteRequest() {
